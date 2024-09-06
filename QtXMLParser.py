@@ -1,4 +1,6 @@
-"""SParser XML Based Parser for PyQT6"""
+"""SParser XML Based Parser for PyQT6
+Support for QLabel , QButton , QRadioButton ,
+"""
 try:
     import time
     import os
@@ -8,45 +10,74 @@ try:
     from PyQt6.QtGui import QIcon
 except Exception as err:
     print("Error loading modules.")
+    print(f"Error : {str(err)}")
     print("Now Quitting in 3 seconds")
     time.sleep(3)
     sys.exit(0)
 
 
-# TODO : Add support for form layout
-# TODO : Sanitize the PyScript Tag
+# TODO : Sanitize the PyScript Tag (Not safe)
 # TODO : Add Multiple window support
-# TODO : Add support for onTextChanged and for onChanged for radio buttons.
-
-def parse_xml(file):
+def parse_xml(file) -> ET:
+    """Parse Layout XML File"""
     tree = ET.parse(file)
     return tree.getroot()
 
 
-def create_widget(element):
+glob_scope = globals()
+scripting_disabled = False
+
+
+def create_widget(element) -> QLabel | QPushButton | QRadioButton | QLineEdit | QComboBox | None:
     """Create all the widgets in our Layout"""
     if element.tag == 'QLabel':
         return QLabel(element.attrib['text'])
     elif element.tag == 'LineText':
-        return QLineEdit()
+        l_e = QLineEdit()
+        if 'ontextchanged' in element.attrib:
+            scope_up = locals()  # Get local scope to pass on to eval
+            # We pass local and global scope to eval to successfully connect lineedit textchange to its respective
+            # function
+            l_e.textChanged.connect(lambda: eval(element.attrib['ontextchanged'], scope_up, glob_scope))
+        return l_e
+
+
+
     elif element.tag == 'QButton':
         button = QPushButton(element.attrib['text'])
-        button.clicked.connect(lambda: eval(element.attrib['onclick']))
+        if 'onclick' in element.attrib:
+            scope_up = locals()
+            button.clicked.connect(lambda: eval(element.attrib['onclick'], scope_up, glob_scope))
         return button
     elif element.tag == 'QRadioButton':
         button = QRadioButton(element.attrib['text'])
-        button.clicked.connect(lambda: eval(element.attrib['onclick']))
+        if 'onclick' in element.attrib:
+            scope_up = locals()
+            button.clicked.connect(lambda: eval(element.attrib['onclick'], scope_up, glob_scope))
+        if 'onchanged' in element.attrib:
+            button.toggled.connect(lambda: eval(element.attrib['onchanged'], scope_up, glob_scope))
         return button
+    elif element.tag == 'QComboBox':
+        combobox = QComboBox()
+        combo_items = eval(element.attrib["items"])
+        if 'oncurrentindexchanged' in element.attrib:
+            scope_up = locals()
+            # Connect our combobox item change to respective function
+            combobox.currentIndexChanged.connect(
+                lambda: eval(element.attrib['oncurrentindexchanged'], scope_up, glob_scope))
+        for combo_item in combo_items:
+            combobox.addItem(combo_item)
+        return combobox
 
     return None
 
-
+#Keep track of element ids to avoid conflicts
 script_element_id_list = []
 
 
-def load_scripts(elements):
+def load_scripts(elements) -> None:
     """Load scripts from PyScript tag"""
-    global script_element_id_list
+    global script_element_id_list, glob_scope
     for element in elements:
         if element.attrib["id"] in script_element_id_list:
             raise Exception("Duplicate elements detected")
@@ -56,7 +87,8 @@ def load_scripts(elements):
             script_element_id_list.append(element.attrib["id"])
 
 
-def build_layout(element) -> QGridLayout | QFormLayout:
+def build_layout(element) -> QGridLayout | QFormLayout | None:
+    """Builds based on the layout specified"""
     if element.tag == 'layout' and element.attrib['type'] == 'grid':
         layout = QGridLayout()
         for child in element:
@@ -66,7 +98,16 @@ def build_layout(element) -> QGridLayout | QFormLayout:
         return layout
     elif element.tag == 'layout' and element.attrib['type'] == 'form':
         layout = QFormLayout()
-        # To be implemented
+        form_row_lst = element.findall('row')
+        for form_row in form_row_lst:
+            if form_row.find("Qlabeltext") is None:
+                s_but = create_widget(form_row.find('QButton'))
+                layout.addRow(s_but)
+                continue
+            label = QLabel(form_row.find('Qlabeltext').attrib['text'])
+            ledt = create_widget(form_row.find('LineText'))
+            layout.addRow(label,ledt)
+
         return layout
     return None
 
@@ -77,7 +118,8 @@ def create_window(root) -> None:
     window = QMainWindow()
     central_widget = QWidget()
     pre_script = root.findall('window/PyScript')
-    load_scripts(pre_script)
+    if not scripting_disabled:
+        load_scripts(pre_script)
     layout = build_layout(root.find('window/layout'))
     central_widget.setLayout(layout)
     window.setCentralWidget(central_widget)
@@ -88,6 +130,6 @@ def create_window(root) -> None:
     app.exec()
 
 
-root = parse_xml('testui.xml')
+root = parse_xml('TestGridUi01.xml')
 create_window(root)
 sys.exit(0)

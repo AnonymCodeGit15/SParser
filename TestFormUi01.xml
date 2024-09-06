@@ -1,0 +1,19 @@
+<ui>
+    <window title="Test Window" width="500" height="600" iconfile="SParser.png">
+        <PyScript src="OnClickLoader.py" id="1"/>
+        <layout type="form">
+            <row>
+                <Qlabeltext text="Name"/>
+                <LineText id="lt01" ontextchanged="l_changed(l_e)"/>
+            </row>
+            <row>
+                <Qlabeltext text="User_ID"/>
+                <LineText id="lt01" ontextchanged="l_changed(l_e)"/>
+            </row>
+            <row>
+                <QButton text="Submit" onclick="submitForm(button)"/>
+                <LineText id="lt01" ontextchanged="l_changed(l_e)"/>
+            </row>
+        </layout>
+    </window>
+</ui>

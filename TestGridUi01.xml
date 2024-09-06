@@ -1,0 +1,14 @@
+<ui>
+    <window title="Test Window" width="500" height="600" iconfile="SParser.png">
+        <PyScript src="OnClickLoader.py" id="1"/>
+        <layout type="grid">
+            <QLabel row="0" column="0" text="Name:"/>
+            <LineText row="0" column="1" id="name" ontextchanged="l_changed(l_e)"/>
+            <QLabel row="1" column="0" id="User_ID" text="User ID"/>
+            <LineText row="1" column="1" id="idno" ontextchanged="l_changed(l_e)"/>
+            <QButton row="2" column="0" columnspan="2" text="Submit" onclick="submitForm(button)"/>
+            <QRadioButton row="3" column="0" id="qradio0" text="Testing" onclick="button_pressed(button)"/>
+            <QComboBox row="4" column="0" id="qcombo0" items="['Apple','Banana','Orange']" oncurrentindexchanged="combo_index_changed(combobox)"/>
+        </layout>
+    </window>
+</ui>
