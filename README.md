@@ -21,14 +21,14 @@ cd SParser
 ## Usage 
 `python QtXMLParser.py --load_ui myUIFile.xml`
 ## XML Markup Tag Table
-| Qt Widget    | Markup Tag      | Supported Attributes |
-| -------- |-----------------| ------- | 
-| QLabel | \<QLabel>       | id, text ,onclick ,row ,column|
-| QPushButton | \<QButton>      | id, text ,onclick ,row ,column|
-| QRadioButton | \<QRadioButton> |id, text ,onclick ,row ,column |
-| QLineEdit   | \<LineText>     |id ,ontextchanged , row ,column |
-| QComboBox   | \<QComboBox>    |id ,oncurrentindexchanged , row ,column |
-
+| Qt Widget    | Markup Tag      | Supported Attributes                    |
+|--------------|-----------------|-----------------------------------------| 
+| QLabel       | \<QLabel>       | id, text ,onclick ,row ,column          |
+| QPushButton  | \<QButton>      | id, text ,onclick ,row ,column          |
+| QRadioButton | \<QRadioButton> | id, text ,onclick ,row ,column          |
+| QLineEdit    | \<LineText>     | id ,ontextchanged , row ,column         |
+| QComboBox    | \<QComboBox>    | id ,oncurrentindexchanged , row ,column |
+| QCheckBox    | \<QCheckBox>    | id, text ,statechanged ,row ,column     |
 ### Custom Markup Tags
 | Markup Tag  | Usage                                      | Supported Attributes |
 |-------------|--------------------------------------------| ------- | 
@@ -42,11 +42,12 @@ cd SParser
 > The script file specified in the PyScript tag is loaded directly allowing execution of any arbitrary python file.
 
 | Qt Widget    | Parameter Name |
-| -------- | ------- |
-| QPushButton | button |
+|--------------| ------- |
+| QPushButton  | button |
+| QCheckBox    | button |
 | QRadioButton | button |
-| QLineEdit   | l_e |
-| QComboBox   | combobox   |
+| QLineEdit    | l_e |
+| QComboBox    | combobox   |
 
 ## Example UI File with Grid Layout
 ```
@@ -61,6 +62,7 @@ cd SParser
             <QButton row="2" column="0" columnspan="2" text="Submit" onclick="submitForm(button)"/>
             <QRadioButton row="3" column="0" id="qradio0" text="Testing" onclick="button_pressed(button)"/>
             <QComboBox row="4" column="0" id="qcombo0" items="['Apple','Banana','Orange']" oncurrentindexchanged="combo_index_changed(combobox)"/>
+            <QCheckBox row="4" column="1" id="qcheck0" text="Checkbox" onstatechanged="check_box_changed(button)"/>
         </layout>
     </window>
 </ui>

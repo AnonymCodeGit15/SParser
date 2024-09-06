@@ -11,3 +11,6 @@ def button_pressed(obj):
 
 def combo_index_changed(obj):
     print('Combobox changed to '+obj.currentText())
+
+def check_box_changed(obj):
+    print('Check box state changed to '+str(obj.isChecked()))

@@ -39,7 +39,7 @@ glob_scope = globals()
 scripting_disabled = False
 
 
-def create_widget(element) -> QLabel | QPushButton | QRadioButton | QLineEdit | QComboBox | None:
+def create_widget(element) -> QLabel | QPushButton | QRadioButton | QLineEdit | QComboBox | QCheckBox | None:
     """Create all the widgets in our Layout"""
     if element.tag == 'QLabel':
         return QLabel(element.attrib['text'])
@@ -79,6 +79,12 @@ def create_widget(element) -> QLabel | QPushButton | QRadioButton | QLineEdit | 
         for combo_item in combo_items:
             combobox.addItem(combo_item)
         return combobox
+    elif element.tag == 'QCheckBox':
+        button = QCheckBox(element.attrib['text'])
+        if 'onstatechanged' in element.attrib:
+            scope_up = locals()
+            button.stateChanged.connect(lambda: eval(element.attrib['onstatechanged'], scope_up, glob_scope))
+        return button
 
     return None
 
@@ -100,7 +106,7 @@ def load_scripts(elements) -> None:
 
 
 def build_layout(element) -> QGridLayout | QFormLayout | None:
-    """Builds based on the layout specified"""
+    """Builds based on the layout specified Grid / Form"""
     if element.tag == 'layout' and element.attrib['type'] == 'grid':
         layout = QGridLayout()
         for child in element:
