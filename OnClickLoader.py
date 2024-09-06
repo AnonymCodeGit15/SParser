@@ -14,3 +14,6 @@ def combo_index_changed(obj):
 
 def check_box_changed(obj):
     print('Check box state changed to '+str(obj.isChecked()))
+
+def slider_value_changed(obj):
+    print('Slider value changed to '+str(obj.value()))

@@ -21,14 +21,15 @@ cd SParser
 ## Usage 
 `python QtXMLParser.py --load_ui myUIFile.xml`
 ## XML Markup Tag Table
-| Qt Widget    | Markup Tag      | Supported Attributes                    |
-|--------------|-----------------|-----------------------------------------| 
-| QLabel       | \<QLabel>       | id, text ,onclick ,row ,column          |
-| QPushButton  | \<QButton>      | id, text ,onclick ,row ,column          |
-| QRadioButton | \<QRadioButton> | id, text ,onclick ,row ,column          |
-| QLineEdit    | \<LineText>     | id ,ontextchanged , row ,column         |
-| QComboBox    | \<QComboBox>    | id ,oncurrentindexchanged , row ,column |
-| QCheckBox    | \<QCheckBox>    | id, text ,statechanged ,row ,column     |
+| Qt Widget    | Markup Tag      | Supported Attributes                                |
+|--------------|-----------------|-----------------------------------------------------| 
+| QLabel       | \<QLabel>       | id ,text ,onclick ,row ,column                      |
+| QPushButton  | \<QButton>      | id ,text ,onclick ,row ,column                      |
+| QRadioButton | \<QRadioButton> | id ,text ,onclick ,row ,column                      |
+| QLineEdit    | \<LineText>     | id ,ontextchanged , row ,column                     |
+| QComboBox    | \<QComboBox>    | id ,oncurrentindexchanged , row ,column             |
+| QCheckBox    | \<QCheckBox>    | id ,text ,onstatechanged ,row ,column               |
+| QSlider      | \<QSlider>      | id ,onvaluechanged ,row ,column ,maxvalue ,minvalue |
 ### Custom Markup Tags
 | Markup Tag  | Usage                                      | Supported Attributes |
 |-------------|--------------------------------------------| ------- | 
@@ -42,12 +43,13 @@ cd SParser
 > The script file specified in the PyScript tag is loaded directly allowing execution of any arbitrary python file.
 
 | Qt Widget    | Parameter Name |
-|--------------| ------- |
-| QPushButton  | button |
-| QCheckBox    | button |
-| QRadioButton | button |
-| QLineEdit    | l_e |
-| QComboBox    | combobox   |
+|--------------|----------------|
+| QPushButton  | button         |
+| QCheckBox    | button         |
+| QRadioButton | button         |
+| QLineEdit    | l_e            |
+| QComboBox    | combobox       |
+| QSlider      | slider         |
 
 ## Example UI File with Grid Layout
 ```
@@ -63,6 +65,7 @@ cd SParser
             <QRadioButton row="3" column="0" id="qradio0" text="Testing" onclick="button_pressed(button)"/>
             <QComboBox row="4" column="0" id="qcombo0" items="['Apple','Banana','Orange']" oncurrentindexchanged="combo_index_changed(combobox)"/>
             <QCheckBox row="4" column="1" id="qcheck0" text="Checkbox" onstatechanged="check_box_changed(button)"/>
+            <QSlider row="4" column="2" id="qslider0" onvaluechanged="slider_value_changed(slider)" maxvalue="10" minvalue="1"/>
         </layout>
     </window>
 </ui>

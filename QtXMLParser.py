@@ -85,6 +85,16 @@ def create_widget(element) -> QLabel | QPushButton | QRadioButton | QLineEdit | 
             scope_up = locals()
             button.stateChanged.connect(lambda: eval(element.attrib['onstatechanged'], scope_up, glob_scope))
         return button
+    elif element.tag == 'QSlider':
+        slider = QSlider()
+        if 'onvaluechanged' in element.attrib:
+            scope_up = locals()
+            slider.valueChanged.connect(lambda: eval(element.attrib['onvaluechanged'], scope_up, glob_scope))
+        if 'maxvalue' in element.attrib:
+            slider.setMaximum(int(element.attrib['maxvalue']))
+        if 'minvalue' in element.attrib:
+            slider.setMinimum(int(element.attrib['minvalue']))
+        return slider
 
     return None
 
