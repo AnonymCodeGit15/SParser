@@ -37,7 +37,8 @@ cd SParser
 | \<window>   | Set Window dimensions and other attributes | title ,width ,height ,iconfile |
 > [!NOTE]
 > The script specified in the PyScript tag can be used to define the onclick functions with the widget object passed as a specially named parameter.
-> [!CAUTION]
+
+> [!WARNING]
 > The script file specified in the PyScript tag is loaded directly allowing execution of any arbitrary python file.
 
 | Qt Widget    | Parameter Name |
