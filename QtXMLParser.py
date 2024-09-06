@@ -1,5 +1,5 @@
 """SParser XML Based Parser for PyQT6
-Support for QLabel , QButton , QRadioButton ,
+Support for QLabel , QButton , QRadioButton and many more widgets.
 """
 try:
     import time
@@ -8,6 +8,7 @@ try:
     import xml.etree.ElementTree as ET
     from PyQt6.QtWidgets import *
     from PyQt6.QtGui import QIcon
+    import argparse
 except Exception as err:
     print("Error loading modules.")
     print(f"Error : {str(err)}")
@@ -23,6 +24,16 @@ def parse_xml(file) -> ET:
     tree = ET.parse(file)
     return tree.getroot()
 
+
+# Parse command line arguments
+parser = argparse.ArgumentParser()
+parser.add_argument("--load_ui", "-U", type=str, help="Specify XML UI file", action="store")
+args = parser.parse_args()
+ui_load_from_file = False
+ui_xml_file = ""
+if args.load_ui != None:
+    ui_xml_file = args.load_ui
+    ui_load_from_file = True
 
 glob_scope = globals()
 scripting_disabled = False
@@ -71,7 +82,8 @@ def create_widget(element) -> QLabel | QPushButton | QRadioButton | QLineEdit | 
 
     return None
 
-#Keep track of element ids to avoid conflicts
+
+# Keep track of element ids to avoid conflicts
 script_element_id_list = []
 
 
@@ -106,7 +118,7 @@ def build_layout(element) -> QGridLayout | QFormLayout | None:
                 continue
             label = QLabel(form_row.find('Qlabeltext').attrib['text'])
             ledt = create_widget(form_row.find('LineText'))
-            layout.addRow(label,ledt)
+            layout.addRow(label, ledt)
 
         return layout
     return None
@@ -130,6 +142,9 @@ def create_window(root) -> None:
     app.exec()
 
 
-root = parse_xml('TestGridUi01.xml')
+if ui_load_from_file:
+    root = parse_xml(ui_xml_file)
+else:
+    root = parse_xml('TestGridUi01.xml')
 create_window(root)
 sys.exit(0)
