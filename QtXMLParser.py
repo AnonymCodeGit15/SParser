@@ -142,6 +142,7 @@ def create_window(root) -> None:
     app.exec()
 
 
+# Check if custom UI file is specified ,otherwise just loading default XML file.
 if ui_load_from_file:
     root = parse_xml(ui_xml_file)
 else:

@@ -8,11 +8,11 @@
             </row>
             <row>
                 <Qlabeltext text="User_ID"/>
-                <LineText id="lt01" ontextchanged="l_changed(l_e)"/>
+                <LineText id="lt02" ontextchanged="l_changed(l_e)"/>
             </row>
             <row>
                 <QButton text="Submit" onclick="submitForm(button)"/>
-                <LineText id="lt01" ontextchanged="l_changed(l_e)"/>
+                <LineText id="lt03" ontextchanged="l_changed(l_e)"/>
             </row>
         </layout>
     </window>

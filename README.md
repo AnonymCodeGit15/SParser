@@ -30,10 +30,10 @@ cd SParser
 | QComboBox   | \<QComboBox>    |id ,oncurrentindexchanged , row ,column |
 
 ### Custom Markup Tags
-| Markup Tag  | Usage | Supported Attributes |
-|-------------| ------- | ------- | 
-| \<PyScript> | Runs Python Script in current scope | id ,src
-| \<ui>       | UI File | |
+| Markup Tag  | Usage                                      | Supported Attributes |
+|-------------|--------------------------------------------| ------- | 
+| \<PyScript> | Runs Python Script in global scope         | id ,src
+| \<ui>       | UI File                                    | |
 | \<window>   | Set Window dimensions and other attributes | title ,width ,height ,iconfile |
 > [!NOTE]
 > The script specified in the PyScript tag can be used to define the onclick functions with the widget object passed as a specially named parameter.
@@ -77,11 +77,11 @@ cd SParser
             </row>
             <row>
                 <Qlabeltext text="User_ID"/>
-                <LineText id="lt01" ontextchanged="l_changed(l_e)"/>
+                <LineText id="lt02" ontextchanged="l_changed(l_e)"/>
             </row>
             <row>
                 <QButton text="Submit" onclick="submitForm(button)"/>
-                <LineText id="lt01" ontextchanged="l_changed(l_e)"/>
+                <LineText id="lt03" ontextchanged="l_changed(l_e)"/>
             </row>
         </layout>
     </window>
