@@ -21,20 +21,20 @@ cd SParser
 ## Usage 
 `python QtXMLParser.py --load_ui myUIFile.xml`
 ## XML Markup Tag Table
-| Qt Widget    | Markup Tag | Supported Attributes |
-| -------- | ------- | ------- | 
-| QLabel | <QLabel>    | id, text ,onclick ,row ,column|
-| QPushButton | <QButton>    | id, text ,onclick ,row ,column|
-| QRadioButton | <QRadioButton>     |id, text ,onclick ,row ,column |
-| QLineEdit   | <LineText>   |id ,ontextchanged , row ,column |
-| QComboBox   | <QComboBox>   |id ,oncurrentindexchanged , row ,column |
+| Qt Widget    | Markup Tag      | Supported Attributes |
+| -------- |-----------------| ------- | 
+| QLabel | \<QLabel>       | id, text ,onclick ,row ,column|
+| QPushButton | \<QButton>      | id, text ,onclick ,row ,column|
+| QRadioButton | \<QRadioButton> |id, text ,onclick ,row ,column |
+| QLineEdit   | \<LineText>     |id ,ontextchanged , row ,column |
+| QComboBox   | \<QComboBox>    |id ,oncurrentindexchanged , row ,column |
 
 ### Custom Markup Tags
-| Markup Tag | Usage | Supported Attributes |
-| -------- | ------- | ------- | 
-| <PyScript> | Runs Python Script in current scope | id ,src
-| <ui> | UI File | |
-| <window> | Set Window dimensions and other attributes | title ,width ,height ,iconfile |
+| Markup Tag  | Usage | Supported Attributes |
+|-------------| ------- | ------- | 
+| \<PyScript> | Runs Python Script in current scope | id ,src
+| \<ui>       | UI File | |
+| \<window>   | Set Window dimensions and other attributes | title ,width ,height ,iconfile |
 > [!NOTE]
 > The script specified in the PyScript tag can be used to define the onclick functions with the widget object passed as a specially named parameter.
 > [!CAUTION]
