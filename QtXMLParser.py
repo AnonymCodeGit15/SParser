@@ -8,6 +8,7 @@ try:
     import xml.etree.ElementTree as ET
     from PyQt6.QtWidgets import *
     from PyQt6.QtGui import QIcon
+    from PyQt6.QtCore import Qt
     import argparse
 except Exception as err:
     print("Error loading modules.")
@@ -39,7 +40,7 @@ glob_scope = globals()
 scripting_disabled = False
 
 
-def create_widget(element) -> QLabel | QPushButton | QRadioButton | QLineEdit | QComboBox | QCheckBox | None:
+def create_widget(element) -> QLabel | QPushButton | QRadioButton | QLineEdit | QComboBox | QCheckBox | QSlider | None:
     """Create all the widgets in our Layout"""
     if element.tag == 'QLabel':
         return QLabel(element.attrib['text'])
@@ -86,7 +87,15 @@ def create_widget(element) -> QLabel | QPushButton | QRadioButton | QLineEdit | 
             button.stateChanged.connect(lambda: eval(element.attrib['onstatechanged'], scope_up, glob_scope))
         return button
     elif element.tag == 'QSlider':
-        slider = QSlider()
+        slider_orientation = Qt.Orientation.Horizontal #Set default orientation to horizontal
+        if 'orientation' in element.attrib:
+            if element.attrib['orientation'] == 'horizontal' :
+                slider_orientation = Qt.Orientation.Horizontal
+            elif element.attrib['orientation'] == 'vertical' :
+                slider_orientation = Qt.Orientation.Vertical
+            else:
+                raise KeyError("Invalid orientation specified. Orientation can only be horizontal or vertical")
+        slider = QSlider(slider_orientation)
         if 'onvaluechanged' in element.attrib:
             scope_up = locals()
             slider.valueChanged.connect(lambda: eval(element.attrib['onvaluechanged'], scope_up, glob_scope))

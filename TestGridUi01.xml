@@ -10,7 +10,7 @@
             <QRadioButton row="3" column="0" id="qradio0" text="Testing" onclick="button_pressed(button)"/>
             <QComboBox row="4" column="0" id="qcombo0" items="['Apple','Banana','Orange']" oncurrentindexchanged="combo_index_changed(combobox)"/>
             <QCheckBox row="4" column="1" id="qcheck0" text="Checkbox" onstatechanged="check_box_changed(button)"/>
-            <QSlider row="4" column="2" id="qslider0" onvaluechanged="slider_value_changed(slider)" maxvalue="10" minvalue="1"/>
+            <QSlider row="4" column="2" id="qslider0" onvaluechanged="slider_value_changed(slider)" maxvalue="10" minvalue="1" orientation="horizontal"/>
         </layout>
     </window>
 </ui>
