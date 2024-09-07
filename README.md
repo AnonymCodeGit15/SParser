@@ -26,8 +26,8 @@ cd SParser
 | QLabel       | \<QLabel>       | id ,text ,onclick ,row ,column                                   |
 | QPushButton  | \<QButton>      | id ,text ,onclick ,row ,column                                   |
 | QRadioButton | \<QRadioButton> | id ,text ,onclick ,row ,column                                   |
-| QLineEdit    | \<LineText>     | id ,ontextchanged , row ,column                                  |
-| QComboBox    | \<QComboBox>    | id ,oncurrentindexchanged , row ,column                          |
+| QLineEdit    | \<LineText>     | id ,ontextchanged ,row ,column                                   |
+| QComboBox    | \<QComboBox>    | id ,oncurrentindexchanged ,row ,column                           |
 | QCheckBox    | \<QCheckBox>    | id ,text ,onstatechanged ,row ,column                            |
 | QSlider      | \<QSlider>      | id ,onvaluechanged ,orientation ,row ,column ,maxvalue ,minvalue |
 ### Custom Markup Tags
